@@ -562,7 +562,7 @@ def build_ranking(career, weights):
                 ranking[score_col] = (
                     values.rank(
                         pct=True,
-                        ascending=not higher_is_better,
+                        ascending=higher_is_better,
                     )
                     * 100
                 ).fillna(50.0)
