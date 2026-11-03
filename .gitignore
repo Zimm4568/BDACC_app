@@ -1,6 +1,17 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfstate.d/
+*.tfplan
+crash.log
+crash.*.log
+
+# App package
+app.zip
+
+# Python / Streamlit
 .venv/
-.python-runtime/
-.uv-cache/
 __pycache__/
-*.py[cod]
-.streamlit/secrets.toml
+*.pyc
+.DS_Store
