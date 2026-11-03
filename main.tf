@@ -87,8 +87,10 @@ resource "azurerm_linux_web_app" "app" {
     always_on = var.app_service_sku != "F1"
 
     application_stack {
-      node_version = "22-lts"
+      python_version = "3.12"
     }
+
+    app_command_line = "bash startup.sh"
   }
 
   app_settings = {
