@@ -85,6 +85,7 @@ resource "azurerm_linux_web_app" "app" {
   site_config {
     # The free tier (F1) does not support Always On.
     always_on = var.app_service_sku != "F1"
+    websockets_enabled = true
 
     application_stack {
       python_version = "3.12"
@@ -96,6 +97,7 @@ resource "azurerm_linux_web_app" "app" {
   app_settings = {
     APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.appi.connection_string
     ENVIRONMENT                           = var.environment
+    SCM_DO_BUILD_DURING_DEPLOYMENT        = "true"
   }
 
   # Only added when the matching database is enabled.
