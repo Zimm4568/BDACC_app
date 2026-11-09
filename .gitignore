@@ -4,3 +4,15 @@
 __pycache__/
 *.py[cod]
 .streamlit/secrets.toml
+
+# Local Azure/Terraform deployment files (keep the provider lock file tracked).
+.azure/
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfstate.d/
+*.tfplan
+crash.log
+crash.*.log
+artifacts/
+app.zip
