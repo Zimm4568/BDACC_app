@@ -35,18 +35,10 @@ Production consumes Azure credit while the plan exists, even when the app is
 stopped. No database or storage account is needed: the CSV files travel with
 the application.
 
-### Dashboard addresses
+### Deployment status
 
-Both environments are hosted in France Central under Azure for Students.
-
-| Environment | Dashboard | App Service tier |
-| --- | --- | --- |
-| Production | [Open the F1 dashboard](https://app-f1-dashboard-s57ipi-prod.azurewebsites.net) | B1 |
-| Development | [Open dev](https://app-f1-dashboard-dkut4l-dev.azurewebsites.net) | F1 |
-
-Both environments passed HTTPS health and live Streamlit session checks on
-November 13, 2026: 12 metrics, 6 charts, and no Python exceptions. Allow a few
-minutes for the initial historical view to calculate on these small plans.
+The dev and prod Azure environments, including their App Service plans and
+resource groups, were removed on November 13, 2026.
 
 ### Sign in and check the region
 
