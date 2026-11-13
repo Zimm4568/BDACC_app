@@ -35,6 +35,15 @@ Production consumes Azure credit while the plan exists, even when the app is
 stopped. No database or storage account is needed: the CSV files travel with
 the application.
 
+### Dashboard addresses
+
+Both environments are hosted in France Central under Azure for Students.
+
+| Environment | Dashboard | App Service tier |
+| --- | --- | --- |
+| Production | [Open the F1 dashboard](https://app-f1-dashboard-s57ipi-prod.azurewebsites.net) | B1 |
+| Development | [Open dev](https://app-f1-dashboard-dkut4l-dev.azurewebsites.net) | F1 |
+
 ### Sign in and check the region
 
 Install Azure CLI and Terraform, then run these commands from this folder:
@@ -53,13 +62,9 @@ Use the account that owns the student subscription. If device-code login is
 blocked by university policy, use standard `az login` and its account picker.
 The region in both `environments/dev.tfvars` and `environments/prod.tfvars`
 must appear in the subscription's **Allowed resource deployment regions**
-policy. This deployment must use `northcentralus`, as requested. The student
-subscription's F1 and B1 App Service quotas there were both zero; quota must
-be available before this configuration can be applied successfully.
-Requests for one F1 instance and one B1 instance were rejected with
-`ResourceNotAvailableForOffer` on November 4, 2026. Azure support or the
-subscription administrator must resolve this offer restriction before
-deploying to North Central US with the guide's App Service tiers.
+policy. Both environments use `francecentral`, as requested. France Central
+is policy-allowed and had quota for one F1 instance and one B1 instance when
+checked on November 13, 2026. An actual F1 plan creation test also succeeded.
 
 ### Deploy and verify dev
 
@@ -103,11 +108,10 @@ Invoke-RestMethod "$prodUrl/_stcore/health"
 Start-Process $prodUrl
 ```
 
-This deployment must remain in North Central US. If Azure reports a quota
-shortage there, resolve it with Azure support or use an authorized subscription
-with capacity in North Central US, then regenerate the affected plan. Do not
-apply a plan containing unexpected resource deletions or changes to other
-projects.
+If Azure reports a quota shortage in France Central, resolve it with Azure
+support or use an authorized subscription with capacity there, then regenerate
+the affected plan. Do not apply a plan containing unexpected resource deletions
+or changes to other projects.
 
 `scripts/verify-app.py` checks HTTPS health and runs a real Streamlit session
 over WebSockets, requiring the dashboard heading, charts, metrics, and no
@@ -141,6 +145,6 @@ the moved files. From the `BDACC_app` folder:
 
 ```powershell
 git add -A
-git commit -m "Rename dataset folder to data and document dependency setup"
-git push origin main
+git commit -m "Update F1 dashboard and Azure deployment"
+git push
 ```

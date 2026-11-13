@@ -1,3 +1,3 @@
 environment = "dev"
-location    = "northcentralus"
+location    = "francecentral"
 sku_name    = "F1"
