@@ -44,6 +44,10 @@ Both environments are hosted in France Central under Azure for Students.
 | Production | [Open the F1 dashboard](https://app-f1-dashboard-s57ipi-prod.azurewebsites.net) | B1 |
 | Development | [Open dev](https://app-f1-dashboard-dkut4l-dev.azurewebsites.net) | F1 |
 
+Both environments passed HTTPS health and live Streamlit session checks on
+November 13, 2026: 12 metrics, 6 charts, and no Python exceptions. Allow a few
+minutes for the initial historical view to calculate on these small plans.
+
 ### Sign in and check the region
 
 Install Azure CLI and Terraform, then run these commands from this folder:

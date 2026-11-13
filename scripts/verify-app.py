@@ -6,6 +6,7 @@ Run with the same Python environment used for the dashboard:
 
 import argparse
 import json
+import sys
 import time
 from urllib.parse import urlsplit
 
@@ -40,6 +41,7 @@ def verify(url):
     text = []
     exceptions = []
     messages = 0
+    finished = False
     started = time.monotonic()
     with connect(
         f"wss://{parts.netloc}/_stcore/stream",
@@ -54,7 +56,18 @@ def verify(url):
         socket.send(request.SerializeToString())
 
         while time.monotonic() - started < 180:
-            payload = socket.recv(timeout=60)
+            remaining = 180 - (time.monotonic() - started)
+            if remaining <= 0:
+                break
+            try:
+                payload = socket.recv(timeout=min(60, remaining))
+            except TimeoutError:
+                print(
+                    f"Waiting for Streamlit: {messages} messages, "
+                    f"{len(metrics)} metrics, {charts} charts received.",
+                    file=sys.stderr,
+                )
+                continue
             if not isinstance(payload, bytes):
                 continue
             message = ForwardMsg()
@@ -71,9 +84,15 @@ def verify(url):
                 if element.HasField("markdown"):
                     text.append(element.markdown.body)
             if message.HasField("script_finished"):
+                finished = True
                 break
-        else:
-            raise RuntimeError("Streamlit did not complete the dashboard run within 180 seconds.")
+
+    if not finished:
+        raise RuntimeError(
+            "Streamlit did not complete within 180 seconds: "
+            f"{messages} messages, {len(metrics)} metrics, {charts} charts; "
+            f"exceptions={exceptions}"
+        )
 
     if exceptions:
         raise RuntimeError(f"Dashboard raised exceptions: {exceptions}")
