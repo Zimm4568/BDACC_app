@@ -8,6 +8,7 @@ $archivePath = Join-Path $artifactDirectory 'app.zip'
 $files = @(
     'BDACC_proj_1.py',
     'requirements.txt',
+    'startup.sh',
     'data/constructors.csv',
     'data/drivers.csv',
     'data/driver_standings.csv',

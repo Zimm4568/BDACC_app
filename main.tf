@@ -49,7 +49,7 @@ resource "azurerm_linux_web_app" "dashboard" {
 
   site_config {
     always_on               = var.sku_name != "F1"
-    app_command_line        = "python -m streamlit run BDACC_proj_1.py --server.address=0.0.0.0 --server.port=8000 --server.headless=true --server.fileWatcherType=none --browser.gatherUsageStats=false"
+    app_command_line        = "sh startup.sh"
     ftps_state              = "Disabled"
     minimum_tls_version     = "1.2"
     scm_minimum_tls_version = "1.2"

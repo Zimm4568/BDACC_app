@@ -78,9 +78,10 @@ Invoke-RestMethod "$devUrl/_stcore/health"
 Start-Process $devUrl
 ```
 
-The package script includes only the application, `requirements.txt`, and all
-six CSVs. Azure installs the Python dependencies during ZIP deployment. The
-configured startup command runs Streamlit on `0.0.0.0:8000`; browser sessions
+The package script includes only the application, `requirements.txt`,
+`startup.sh`, and all six CSVs. Azure installs the Python dependencies during
+ZIP deployment. App Service runs `sh startup.sh`, which starts Streamlit on
+`0.0.0.0:8000`; browser sessions
 use WebSockets. Check that the charts, ranking, and driver comparison load in
 the browser; an HTTP response alone does not verify a Streamlit session.
 The free environment can take time to wake up after inactivity.
@@ -102,9 +103,11 @@ Invoke-RestMethod "$prodUrl/_stcore/health"
 Start-Process $prodUrl
 ```
 
-If Azure reports a quota shortage, choose another policy-allowed region with
-capacity and regenerate the affected plan. Do not apply a plan containing
-unexpected resource deletions or changes to other projects.
+This deployment must remain in North Central US. If Azure reports a quota
+shortage there, resolve it with Azure support or use an authorized subscription
+with capacity in North Central US, then regenerate the affected plan. Do not
+apply a plan containing unexpected resource deletions or changes to other
+projects.
 
 `scripts/verify-app.py` checks HTTPS health and runs a real Streamlit session
 over WebSockets, requiring the dashboard heading, charts, metrics, and no
